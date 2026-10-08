@@ -1,0 +1,133 @@
+/* Estilos de toda la app. CSS plano (PROYECTO.md §3) */
+
+:root {
+  --fondo: #0f1923;
+  --superficie: #182633;
+  --superficie-2: #22344a;
+  --borde: #2d4258;
+  --texto: #e8eef4;
+  --texto-suave: #8fa3b8;
+  --acento: #f5c518;
+  --acento-texto: #1a1a1a;
+  --verde: #2ecc71;
+  --rojo: #ff6b6b;
+  --azul: #5dade2;
+  --radio: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+h2 { margin: 0 0 16px; }
+h3 { margin: 0 0 12px; }
+a { color: var(--acento); }
+
+.contenedor { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  padding: 12px 24px; background: var(--superficie); border-bottom: 1px solid var(--borde);
+}
+.navbar-marca { font-weight: 700; font-size: 1.15rem; color: var(--acento); }
+.navbar-links { display: flex; gap: 16px; flex: 1; }
+.navbar-links a { color: var(--texto-suave); text-decoration: none; padding: 4px 0; }
+.navbar-links a.active { color: var(--texto); border-bottom: 2px solid var(--acento); }
+.navbar-usuario { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.saldo {
+  background: var(--superficie-2); padding: 4px 10px; border-radius: var(--radio);
+  font-weight: 700; color: var(--verde);
+}
+.aviso-simulado {
+  background: #3d3410; color: var(--acento); text-align: center; font-size: 0.85rem; padding: 4px;
+}
+
+/* ---------- Formularios y botones ---------- */
+form { display: flex; flex-direction: column; gap: 12px; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; color: var(--texto-suave); }
+input {
+  padding: 10px; border-radius: var(--radio); border: 1px solid var(--borde);
+  background: var(--fondo); color: var(--texto); font-size: 1rem;
+}
+input:focus { outline: 2px solid var(--acento); border-color: transparent; }
+
+button {
+  padding: 10px 16px; border: none; border-radius: var(--radio); cursor: pointer;
+  background: var(--acento); color: var(--acento-texto); font-weight: 700; font-size: 0.95rem;
+}
+button:disabled { opacity: 0.6; cursor: default; }
+.boton-secundario { background: var(--superficie-2); color: var(--texto); }
+.boton-chico { padding: 4px 10px; font-size: 0.8rem; }
+.fila-botones { display: flex; gap: 8px; flex-wrap: wrap; }
+.fila-botones button { flex: 1; }
+
+/* ---------- Mensajes ---------- */
+.error { color: var(--rojo); margin: 0; }
+.exito { color: var(--verde); margin: 0 0 12px; }
+.texto-suave { color: var(--texto-suave); }
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); padding: 24px;
+}
+.formulario-centro { max-width: 400px; margin: 40px auto; }
+
+/* ---------- Partidos ---------- */
+.pagina-partidos { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+.lista-partidos { display: flex; flex-direction: column; gap: 12px; }
+
+.tarjeta-partido {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: center;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px;
+}
+.partido-fecha { grid-column: 1 / -1; font-size: 0.8rem; color: var(--texto-suave); }
+.partido-equipos { display: flex; flex-direction: column; font-weight: 600; }
+.vs { font-size: 0.75rem; color: var(--texto-suave); font-weight: 400; }
+.cuotas { display: flex; gap: 8px; }
+.cuota {
+  display: flex; flex-direction: column; align-items: center; min-width: 64px; padding: 8px;
+  background: var(--superficie-2); color: var(--texto); border: 1px solid var(--borde);
+}
+.cuota:hover { border-color: var(--acento); }
+.cuota.activa { background: var(--acento); color: var(--acento-texto); }
+.cuota-etiqueta { font-size: 0.75rem; opacity: 0.8; }
+.cuota-valor { font-size: 1.05rem; }
+
+.boleto {
+  position: sticky; top: 16px;
+  background: var(--superficie); border: 1px solid var(--acento); border-radius: var(--radio); padding: 20px;
+}
+.boleto p { margin: 0 0 8px; }
+.boleto-partido { font-weight: 600; }
+
+/* ---------- Tablas ---------- */
+.tabla-envoltura { overflow-x: auto; }
+.tabla { width: 100%; border-collapse: collapse; background: var(--superficie); border-radius: var(--radio); }
+.tabla th, .tabla td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+.tabla th { color: var(--texto-suave); font-weight: 600; font-size: 0.85rem; }
+
+.estado { padding: 2px 8px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; text-transform: capitalize; }
+.estado-pendiente, .estado-abierto { background: #1f3a52; color: var(--azul); }
+.estado-ganada { background: #173d2a; color: var(--verde); }
+.estado-perdida { background: #4a1f24; color: var(--rojo); }
+.estado-finalizado { background: var(--superficie-2); color: var(--texto-suave); }
+
+/* ---------- Admin ---------- */
+.pagina-admin { display: flex; flex-direction: column; gap: 24px; }
+.formulario-partido { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: end; }
+
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+  .pagina-partidos { grid-template-columns: 1fr; }
+  .boleto { position: static; }
+  .tarjeta-partido { grid-template-columns: 1fr; }
+  .formulario-partido { grid-template-columns: 1fr; }
+  .navbar { padding: 12px 16px; gap: 12px; }
+}
