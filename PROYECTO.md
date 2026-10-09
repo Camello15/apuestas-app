@@ -100,8 +100,8 @@ Fuera de alcance: apuestas combinadas, apuestas en vivo, recargas, retiros, noti
 
 | Integrante | Carpeta | Responsabilidad |
 |-----------|---------|-----------------|
-| Camilo | `frontend/` | Pantallas, componentes, `api/cliente.js` |
-| Integrante 2 | `backend/` | API, servicios, reglas de negocio |
-| Integrante 3 | `database/` + `docs/` | Esquema, datos de prueba, diagramas, pruebas de integración |
+| Camilo Velepucha | `frontend/` | Pantallas, componentes, `api/cliente.js` |
+| Jorge Beltran | `backend/` | API, servicios, reglas de negocio |
+| Cristina Feijoo | `database/` + `docs/` | Esquema, datos de prueba, diagramas, pruebas de integración |
 
 Cada uno modifica **solo su carpeta**. Cambios a `PROYECTO.md`, `API.md` o `schema.sql` se acuerdan en grupo.
