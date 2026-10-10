@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import partidoRoutes from './routes/partidoRoutes.js';
 import { manejarErrores } from './middleware/errores.js';
+import apuestaRoutes from './routes/apuestaRoutes.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get('/api/salud', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/partidos', partidoRoutes);
+app.use('/api/apuestas', apuestaRoutes);
 
 // Siempre al final: atrapa los errores lanzados arriba
 app.use(manejarErrores);
