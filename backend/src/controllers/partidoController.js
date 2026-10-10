@@ -1,4 +1,4 @@
-import { listarPartidos, crearPartido } from '../services/partidoService.js';
+import { listarPartidos, crearPartido, registrarResultado } from '../services/partidoService.js';
 import { ErrorApi } from '../middleware/errores.js';
 
 export function listar(req, res) {
@@ -22,4 +22,12 @@ export function crear(req, res) {
     cuotaVisitante,
   });
   res.status(201).json(partido);
+}
+
+export function finalizar(req, res) {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    throw new ErrorApi(404, 'El partido no existe');
+  }
+  res.json(registrarResultado(id, req.body.resultado));
 }

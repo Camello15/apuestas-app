@@ -39,3 +39,54 @@ export function crearPartido({ local, visitante, fecha, cuotaLocal, cuotaEmpate,
   const fila = db.prepare('SELECT * FROM partidos WHERE id = ?').get(info.lastInsertRowid);
   return aPartido(fila);
 }
+
+const RESULTADOS = ['local', 'empate', 'visitante'];
+
+// Dinero siempre con 2 decimales
+const redondear = (n) => Math.round(n * 100) / 100;
+
+export function registrarResultado(partidoId, resultado) {
+  if (!RESULTADOS.includes(resultado)) {
+    throw new ErrorApi(400, "El resultado debe ser 'local', 'empate' o 'visitante'");
+  }
+
+  // R7: finalizar el partido y liquidar apuestas se guarda junto o no se guarda nada
+  const ejecutar = db.transaction(() => {
+    const partido = db.prepare('SELECT * FROM partidos WHERE id = ?').get(partidoId);
+    if (!partido) {
+      throw new ErrorApi(404, 'El partido no existe');
+    }
+    // R8: un partido finalizado no se liquida de nuevo
+    if (partido.estado === 'finalizado') {
+      throw new ErrorApi(409, 'El partido ya estaba finalizado');
+    }
+
+    // R5: el partido pasa a finalizado con su resultado
+    db.prepare("UPDATE partidos SET estado = 'finalizado', resultado = ? WHERE id = ?")
+      .run(resultado, partidoId);
+
+    // Liquidar cada apuesta pendiente de este partido
+    const pendientes = db
+      .prepare("SELECT * FROM apuestas WHERE partido_id = ? AND estado = 'pendiente'")
+      .all(partidoId);
+
+    for (const apuesta of pendientes) {
+      if (apuesta.seleccion === resultado) {
+        // R6: ganancia = monto x cuota, con 2 decimales, y se suma al saldo
+        const ganancia = redondear(apuesta.monto * apuesta.cuota);
+        db.prepare("UPDATE apuestas SET estado = 'ganada', ganancia = ? WHERE id = ?")
+          .run(ganancia, apuesta.id);
+        db.prepare('UPDATE usuarios SET saldo = ROUND(saldo + ?, 2) WHERE id = ?')
+          .run(ganancia, apuesta.usuario_id);
+      } else {
+        // La ganancia se queda en 0
+        db.prepare("UPDATE apuestas SET estado = 'perdida' WHERE id = ?").run(apuesta.id);
+      }
+    }
+
+    const actualizado = db.prepare('SELECT * FROM partidos WHERE id = ?').get(partidoId);
+    return { partido: aPartido(actualizado), apuestasLiquidadas: pendientes.length };
+  });
+
+  return ejecutar();
+}
