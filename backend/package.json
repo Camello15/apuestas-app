@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+  "dev": "node --watch src/index.js",
+  "start": "node src/index.js"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "module": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "express": "^4.22.3"
+  }
+}
