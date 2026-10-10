@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import db from './db.js';
 import authRoutes from './routes/authRoutes.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import partidoRoutes from './routes/partidoRoutes.js';
@@ -12,12 +11,7 @@ const app = express();
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
-// RUTA TEMPORAL de prueba (la borramos después)
-app.get('/api/salud', (req, res) => {
-  const usuarios = db.prepare('SELECT COUNT(*) AS n FROM usuarios').get().n;
-  const partidos = db.prepare('SELECT COUNT(*) AS n FROM partidos').get().n;
-  res.json({ ok: true, usuarios, partidos });
-});
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
