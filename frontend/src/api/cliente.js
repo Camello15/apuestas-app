@@ -5,7 +5,7 @@ const BASE_URL = 'http://localhost:3000/api';
 
 // true  = usa datos simulados en el navegador (mientras el backend no existe).
 // false = llama al backend real en localhost:3000.
-export const MODO_SIMULADO = true;
+export const MODO_SIMULADO = false;
 
 // ---------- Sesión en localStorage (PROYECTO.md §4.2) ----------
 
